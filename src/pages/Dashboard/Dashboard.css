@@ -1,0 +1,14 @@
+.dashboard-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.dashboard-actions a {
+  padding: 13px 18px;
+  background: #101c32;
+  color: white;
+  text-decoration: none;
+  border-radius: 7px;
+  font-size: 13px;
+}
