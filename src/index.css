@@ -32,3 +32,39 @@ a {
   background: #d0ad70;
   color: #101c32;
 }
+
+.transaction-error {
+  color: #dc2626;
+  background: #fef2f2;
+  padding: 12px;
+  border-radius: 7px;
+  font-size: 13px;
+}
+
+.transaction-empty {
+  color: #7b8493;
+  font-size: 14px;
+  margin-top: 15px;
+}
+
+.transfer-error {
+  color: #dc2626;
+  background: #fef2f2;
+  padding: 12px;
+  border-radius: 7px;
+  font-size: 13px;
+}
+
+.transfer-success {
+  color: #15803d;
+  background: #f0fdf4;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.transfer-success h4 {
+  margin-bottom: 8px;
+  font-size: 16px;
+}

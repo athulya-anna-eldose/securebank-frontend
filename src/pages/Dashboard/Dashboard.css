@@ -12,3 +12,80 @@
   border-radius: 7px;
   font-size: 13px;
 }
+
+/* Dashboard error */
+.dashboard-error {
+  padding: 15px;
+  background: #fef2f2;
+  color: #dc2626;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+/* Account overview */
+.dashboard-total {
+  margin-top: 15px;
+  color: #7b8493;
+  font-size: 14px;
+}
+
+/* Recent transactions */
+.dashboard-transactions {
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+}
+
+.dashboard-transaction {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding: 16px 0;
+  border-bottom: 1px solid #e8ebf0;
+}
+
+.dashboard-transaction:last-child {
+  border-bottom: none;
+}
+
+.transaction-description {
+  color: #25334a;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.transaction-date {
+  color: #7b8493;
+  font-size: 12px;
+  margin-top: 6px;
+}
+
+.transaction-amount {
+  text-align: right;
+}
+
+.transaction-amount p {
+  color: #101c32;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.transaction-amount span {
+  display: inline-block;
+  margin-top: 5px;
+  color: #15803d;
+  font-size: 11px;
+}
+
+.dashboard-empty {
+  margin-top: 15px;
+  color: #7b8493;
+  font-size: 13px;
+}
+
+@media (max-width: 500px) {
+  .dashboard-transaction {
+    align-items: flex-start;
+  }
+}

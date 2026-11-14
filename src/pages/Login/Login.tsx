@@ -1,15 +1,46 @@
 
-import "./Login.css";
+import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { loginUser } from "../../services/authService";
+import "./Login.css";
 
 function Login() {
   const navigate = useNavigate();
 
-  function handleLogin(event: React.FormEvent<HTMLFormElement>) {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  async function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    // Demo navigation (authentication will be added later)
-    navigate("/dashboard");
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    const email = (formData.get("email") as string).trim();
+    const password = formData.get("password") as string;
+
+    try {
+      setLoading(true);
+      setError("");
+
+      // Call Login API
+      await loginUser({ email, password });
+
+      // Navigate only after successful login
+      navigate("/dashboard");
+
+    } catch (err: any) {
+      const message =
+        err.response?.data?.message ||
+        (typeof err.response?.data === "string"
+          ? err.response.data
+          : "Invalid email or password. Please try again.");
+
+      setError(message);
+
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -60,7 +91,9 @@ function Login() {
               <input
                 type="email"
                 id="email"
+                name="email"
                 placeholder="Enter your email"
+                autoComplete="email"
                 required
               />
             </div>
@@ -70,7 +103,9 @@ function Login() {
               <input
                 type="password"
                 id="password"
+                name="password"
                 placeholder="Enter your password"
+                autoComplete="current-password"
                 required
               />
             </div>
@@ -86,8 +121,16 @@ function Login() {
               </Link>
             </div>
 
-            <button type="submit" className="login-button">
-              Sign In
+            {error && (
+              <p className="login-error">{error}</p>
+            )}
+
+            <button
+              type="submit"
+              className="login-button"
+              disabled={loading}
+            >
+              {loading ? "Signing In..." : "Sign In"}
             </button>
 
           </form>

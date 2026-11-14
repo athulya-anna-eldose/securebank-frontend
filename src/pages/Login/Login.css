@@ -218,3 +218,19 @@
     padding: 45px 25px;
   }
 }
+
+/* Login error message */
+.login-error {
+  color: #dc2626;
+  background: #fef2f2;
+  padding: 12px;
+  border-radius: 7px;
+  font-size: 13px;
+  margin: 0;
+}
+
+/* Disabled button while API request is running */
+.login-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
