@@ -10,6 +10,7 @@ function Profile() {
   const [profile, setProfile] = useState<ProfileData>({
     fullName: "",
     email: "",
+    accountNumber: "",
     phone: "",
     address: "",
   });
@@ -100,7 +101,14 @@ function Profile() {
                 disabled
               />
             </label>
-
+ <label>
+              Account Number
+              <input
+                type="tel"
+                value={profile.accountNumber}
+                disabled
+              />
+            </label>
             <label>
               Phone Number
               <input

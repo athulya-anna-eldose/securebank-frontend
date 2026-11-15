@@ -5,12 +5,15 @@ import "./DashboardLayout.css";
 function DashboardLayout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
 
-  const navItems = [
-    { name: "Dashboard", path: "/dashboard", icon: "⌂" },
-    { name: "Transactions", path: "/transactions", icon: "↔" },
-    { name: "Transfer", path: "/transfer", icon: "⇄" },
-    { name: "Profile", path: "/profile", icon: "♙" },
-  ];
+ 
+const navItems = [
+  { name: "Dashboard", path: "/dashboard", icon: "⌂" },
+  { name: "Transactions", path: "/transactions", icon: "↔" },
+  { name: "Transfer", path: "/transfer", icon: "⇄" },
+  { name: "Add Money", path: "/deposit", icon: "+" },
+  { name: "Profile", path: "/profile", icon: "♙" },
+];
+
 
   return (
     <div className="dashboard-layout">

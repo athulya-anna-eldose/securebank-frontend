@@ -5,6 +5,7 @@ export interface ProfileData {
   email: string;
   phone: string;
   address: string;
+  accountNumber: string;
 }
 
 export interface ProfileUpdateData {
