@@ -1,6 +1,7 @@
 
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import { loginUser } from "../../services/authService";
 import "./Login.css";
 
@@ -23,18 +24,51 @@ function Login() {
       setLoading(true);
       setError("");
 
-      // Call Login API
       await loginUser({ email, password });
 
-      // Navigate only after successful login
       navigate("/dashboard");
 
-    } catch (err: any) {
-      const message =
-        err.response?.data?.message ||
-        (typeof err.response?.data === "string"
-          ? err.response.data
-          : "Invalid email or password. Please try again.");
+    } catch (err: unknown) {
+      let message = "Unable to sign in. Please try again.";
+
+      if (axios.isAxiosError(err)) {
+        const responseData = err.response?.data;
+
+        if (typeof responseData === "string") {
+          message = responseData;
+        } else if (
+          responseData &&
+          typeof responseData === "object"
+        ) {
+          const data = responseData as {
+            message?: string;
+            error?: string;
+            detail?: string;
+          };
+
+          message =
+            data.message ||
+            data.detail ||
+            data.error ||
+            message;
+        }
+
+        // Fallback for authentication failures
+        if (
+          err.response?.status === 401 &&
+          message === "Unable to sign in. Please try again."
+        ) {
+          message = "Invalid email or password. Please try again.";
+        }
+
+        if (
+  err.response?.status === 429 &&
+  message === "Unable to sign in. Please try again."
+) {
+  message =
+    "Too many requests. Please wait before trying again.";
+}
+      }
 
       setError(message);
 
@@ -48,6 +82,7 @@ function Login() {
 
       {/* Left Section */}
       <div className="login-left">
+
         <Link to="/" className="login-brand">
           <span className="brand-icon">S</span>
           <span>
@@ -73,10 +108,12 @@ function Login() {
         <p className="login-left-footer">
           © 2026 SecureBank. All rights reserved.
         </p>
+
       </div>
 
       {/* Right Section */}
       <div className="login-right">
+
         <div className="login-form-container">
 
           <div className="login-heading">
@@ -88,6 +125,7 @@ function Login() {
 
             <div className="form-group">
               <label htmlFor="email">Email Address</label>
+
               <input
                 type="email"
                 id="email"
@@ -100,6 +138,7 @@ function Login() {
 
             <div className="form-group">
               <label htmlFor="password">Password</label>
+
               <input
                 type="password"
                 id="password"
@@ -122,7 +161,10 @@ function Login() {
             </div>
 
             {error && (
-              <p className="login-error">{error}</p>
+              <div className="login-error" role="alert">
+                <strong>Login failed</strong>
+                <p>{error}</p>
+              </div>
             )}
 
             <button
@@ -145,6 +187,7 @@ function Login() {
           </Link>
 
         </div>
+
       </div>
 
     </div>

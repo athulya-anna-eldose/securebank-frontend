@@ -219,14 +219,30 @@
   }
 }
 
-/* Login error message */
+
 .login-error {
-  color: #dc2626;
+  color: #b91c1c;
   background: #fef2f2;
-  padding: 12px;
+  border: 1px solid #fecaca;
+  padding: 13px 15px;
   border-radius: 7px;
   font-size: 13px;
   margin: 0;
+  line-height: 1.6;
+}
+
+.login-error strong {
+  display: block;
+  margin-bottom: 3px;
+}
+
+.login-error p {
+  margin: 0;
+}
+
+.login-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 /* Disabled button while API request is running */

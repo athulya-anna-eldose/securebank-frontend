@@ -1,3 +1,4 @@
+
 import { useEffect, useState, type FormEvent } from "react";
 import DashboardLayout from "../../components/layout/DashboardLayout";
 import {
@@ -5,6 +6,39 @@ import {
   updateProfile,
   type ProfileData,
 } from "../../services/profileService";
+
+function getErrorMessage(err: any): string {
+  const data = err.response?.data;
+
+  if (typeof data === "string") {
+    return data;
+  }
+
+  if (data?.message) {
+    return data.message;
+  }
+
+  if (data?.errors && Array.isArray(data.errors)) {
+    return data.errors
+      .map((item: any) => item.defaultMessage || item.message)
+      .filter(Boolean)
+      .join(", ");
+  }
+
+  if (data?.errors && typeof data.errors === "object") {
+    return Object.values(data.errors).join(", ");
+  }
+
+  if (data?.detail) {
+    return data.detail;
+  }
+
+  if (err.response?.status === 400) {
+    return "Invalid details. Please check your name, phone number and address.";
+  }
+
+  return "Unable to update profile. Please try again.";
+}
 
 function Profile() {
   const [profile, setProfile] = useState<ProfileData>({
@@ -20,17 +54,13 @@ function Profile() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  // Fetch profile details when the page loads
   useEffect(() => {
     async function fetchProfile() {
       try {
         const data = await getProfile();
         setProfile(data);
       } catch (err: any) {
-        setError(
-          err.response?.data?.message ||
-            "Unable to load profile information."
-        );
+        setError(getErrorMessage(err));
       } finally {
         setLoading(false);
       }
@@ -39,15 +69,14 @@ function Profile() {
     fetchProfile();
   }, []);
 
-  // Handle profile update
   async function handleUpdate(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    try {
-      setSaving(true);
-      setError("");
-      setSuccess("");
+    setSaving(true);
+    setError("");
+    setSuccess("");
 
+    try {
       const updatedProfile = await updateProfile({
         fullName: profile.fullName,
         phone: profile.phone,
@@ -57,10 +86,8 @@ function Profile() {
       setProfile(updatedProfile);
       setSuccess("Profile updated successfully!");
     } catch (err: any) {
-      setError(
-        err.response?.data?.message ||
-          "Unable to update profile. Please try again."
-      );
+      console.error("Profile update error:", err);
+      setError(getErrorMessage(err));
     } finally {
       setSaving(false);
     }
@@ -86,38 +113,44 @@ function Profile() {
               <input
                 type="text"
                 value={profile.fullName}
-                onChange={(e) =>
-                  setProfile({ ...profile, fullName: e.target.value })
-                }
+                onChange={(e) => {
+                  setProfile({ ...profile, fullName: e.target.value });
+                  setError("");
+                  setSuccess("");
+                }}
                 required
+                minLength={2}
+                maxLength={60}
               />
             </label>
 
             <label>
               Email Address
-              <input
-                type="email"
-                value={profile.email}
-                disabled
-              />
+              <input type="email" value={profile.email} disabled />
             </label>
- <label>
+
+            <label>
               Account Number
               <input
-                type="tel"
+                type="text"
                 value={profile.accountNumber}
                 disabled
               />
             </label>
+
             <label>
               Phone Number
               <input
                 type="tel"
                 value={profile.phone}
-                onChange={(e) =>
-                  setProfile({ ...profile, phone: e.target.value })
-                }
+                onChange={(e) => {
+                  setProfile({ ...profile, phone: e.target.value });
+                  setError("");
+                  setSuccess("");
+                }}
                 required
+                pattern="^\+?[0-9]{10,15}$"
+                title="Enter 10 to 15 digits, optionally starting with +"
               />
             </label>
 
@@ -126,15 +159,26 @@ function Profile() {
               <input
                 type="text"
                 value={profile.address}
-                onChange={(e) =>
-                  setProfile({ ...profile, address: e.target.value })
-                }
+                onChange={(e) => {
+                  setProfile({ ...profile, address: e.target.value });
+                  setError("");
+                  setSuccess("");
+                }}
+                maxLength={250}
               />
             </label>
 
-            {error && <p className="profile-error">{error}</p>}
+            {error && (
+              <p className="profile-error" role="alert">
+                {error}
+              </p>
+            )}
 
-            {success && <p className="profile-success">{success}</p>}
+            {success && (
+              <p className="profile-success" role="status">
+                {success}
+              </p>
+            )}
 
             <button
               type="submit"

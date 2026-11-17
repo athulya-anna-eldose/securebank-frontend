@@ -1,32 +1,128 @@
-# React + TypeScript + Vite
+# SecureBank – Intelligent Cyber Threat Detection & API Security Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+## Project Overview
 
-Currently, two official plugins are available:
+SecureBank is a simulated online banking application developed using React and TypeScript, integrated with a Spring Boot backend.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The application combines essential banking operations with cybersecurity monitoring features to demonstrate secure API communication, authentication, and threat detection.
 
-## React Compiler
+## Technologies Used
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React
+- TypeScript
+- Vite
+- React Router DOM
+- Axios
+- Recharts
+- Lucide React
+- CSS
 
-## Expanding the Oxlint configuration
+## Features
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+### Banking Features
+- User registration and login
+- JWT-based authentication
+- Account dashboard
+- View transaction history
+- Simulated money transfers
+- Demo deposits
+- View and update profile information
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+### Cybersecurity Features
+- JWT authentication for protected API requests
+- Automatic JWT attachment using Axios interceptors
+- Logout and local token removal
+- Security Centre dashboard
+- Security event monitoring
+- SQL injection detection monitoring
+- XSS detection monitoring
+- API rate-limit testing
+- Unauthorized access testing
+
+## Application Pages
+
+| Page | Description |
+|---|---|
+| Home | SecureBank introduction |
+| Login | User authentication |
+| Register | New user registration |
+| Dashboard | Account overview |
+| Transactions | Transaction history |
+| Transfer | Simulated money transfers |
+| Deposit | Add demo money |
+| Profile | Manage user details |
+| Security Centre | Monitor security events and test security controls |
+
+## Backend Integration
+
+The frontend communicates with the Spring Boot backend using Axios REST API requests.
+
+Backend URL: `http://localhost:8080`
+
+Configure the backend URL in the frontend `.env` file:
+
+```env
+VITE_API_BASE_URL=http://localhost:8080
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Run Locally
+
+### Prerequisites
+- Node.js
+- npm
+- Running SecureBank backend
+
+### Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/athulya-anna-eldose/securebank-frontend.git
+```
+
+Navigate to the project:
+
+```bash
+cd securebank-frontend
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+Open `http://localhost:5173` in your browser.
+
+## Project Structure
+
+```text
+src/
+├── components/
+│   └── layout/
+├── pages/
+├── services/
+├── assets/
+├── App.tsx
+└── main.tsx
+```
+
+## Security Considerations
+
+- JWT tokens are stored in browser Local Storage in this educational implementation.
+- Axios attaches the token to authenticated API requests.
+- Logout removes the locally stored token.
+- The backend independently validates JWTs before allowing access to protected APIs.
+- React JSX is used to render user-provided values rather than unsafe HTML injection.
+
+Local Storage is accessible to JavaScript. HttpOnly cookies are generally preferred for production authentication systems.
+
+## Disclaimer
+
+SecureBank is an educational cybersecurity project using simulated banking operations. It does not connect to real banking services or process actual financial transactions.

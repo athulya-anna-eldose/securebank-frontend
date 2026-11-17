@@ -9,6 +9,7 @@ import Profile from "./pages/Profile/Profile";
 import Transactions from "./pages/Transactions/Transactions";
 import Transfer from "./pages/Transfer/Transfer";
 import Deposit from "./pages/Deposit/Deposit";
+import Security from "./pages/Security/Security";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/transactions" element={<Transactions />} />
         <Route path="/transfer" element={<Transfer />} />
         <Route path="/deposit" element={<Deposit />} />
+        <Route path="/security" element={<Security />} />
       </Routes>
     </BrowserRouter>
   );

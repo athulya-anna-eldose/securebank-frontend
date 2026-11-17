@@ -5,19 +5,21 @@ import "./DashboardLayout.css";
 function DashboardLayout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
 
- 
-const navItems = [
-  { name: "Dashboard", path: "/dashboard", icon: "⌂" },
-  { name: "Transactions", path: "/transactions", icon: "↔" },
-  { name: "Transfer", path: "/transfer", icon: "⇄" },
-  { name: "Add Money", path: "/deposit", icon: "+" },
-  { name: "Profile", path: "/profile", icon: "♙" },
-];
+  const navItems = [
+    { name: "Dashboard", path: "/dashboard", icon: "⌂" },
+    { name: "Transactions", path: "/transactions", icon: "↔" },
+    { name: "Transfer", path: "/transfer", icon: "⇄" },
+    { name: "Add Money", path: "/deposit", icon: "+" },
+    { name: "Profile", path: "/profile", icon: "♙" },
+    { name: "Security Centre", path: "/security", icon: "◈" },
+  ];
 
+  function handleLogout() {
+    localStorage.removeItem("token");
+  }
 
   return (
     <div className="dashboard-layout">
-
       <aside className="sidebar">
         <Link to="/dashboard" className="sidebar-brand">
           <span className="brand-icon">S</span>
@@ -43,7 +45,11 @@ const navItems = [
           ))}
         </nav>
 
-        <Link to="/" className="logout-link">
+        <Link
+          to="/login"
+          className="logout-link"
+          onClick={handleLogout}
+        >
           ↪ Logout
         </Link>
       </aside>
@@ -65,7 +71,6 @@ const navItems = [
           {children}
         </section>
       </main>
-
     </div>
   );
 }
